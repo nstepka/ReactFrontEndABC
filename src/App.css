@@ -1,0 +1,13 @@
+.test-app-header a, .test-app-header .navbar-burger, .footer .navbar-item, .footer ul{
+  color: white;
+}
+
+.test-app-header a:hover, .test-app-header .navbar-burger:hover, .footer .navbar-item:hover{
+  color: white;
+  background-color: grey;
+}
+
+.navbar-menu{
+  background-color: hsl(0, 0%, 21%);
+}
+
