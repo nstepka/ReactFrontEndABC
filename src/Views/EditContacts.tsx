@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import "../App.css";
 import { ContactTableRow, ContactTableJsonObject, getContactTable } from "../DataObjects/ContactTableInterface";
 import { INIT_RESULT_DATA } from "../DataConstants/ContactTableConstants";
+
 
 
 
@@ -58,6 +59,36 @@ export default function Main() {
     }
 
 
+    function editClient(key: number) {
+        let contactRow: ContactTableRow = tableData.at(key);
+        setmodalClientData(contactRow);
+        toggleModal();
+    }
+
+    const sendForm = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+
+        const { first_name, last_name, phone_number } = event.target as typeof event.target & {
+            first_name: { value: string }
+            last_name: { value: string }
+            phone_number: { value: string }
+
+        }
+
+        await fetch('/route', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                first_name: first_name.value,
+                last_name: last_name.value,
+                phone_number: phone_number.value
+            })
+        })
+    }
+
+
     const Modal = ({ closeModal, modalState }: { closeModal: any, modalState: boolean }) => {
         if (!modalState) {
             return null;
@@ -68,49 +99,61 @@ export default function Main() {
                 <div className="modal-background"></div>
                 <div className="modal-card">
                     <div className="modal-card-head is-radiusless">
-                        <p className="modal-card-title">Client Infoasdasfasfasdrmation</p>
+                        <p className="modal-card-title">Client Contact List</p>
                         <button className="delete is-pulled-right" aria-label="close" onClick={closeModal}></button>
                     </div>
                     <section className="modal-card-body columns">
                         <div className="column">
-                            <label className="has-text-weight-medium">Number: </label>
-                            <p className="mb-3">{(modalClientData.contact_id ? modalClientData.contact_id.toString() : "")}</p>
                             {modalClientData.first_name &&
                                 <>
-                                    <label className="has-text-weight-medium">Clientasfasf Name: </label>
-                                <p>{(modalClientData.first_name ? modalClientData.first_name : "")}</p>
+                                    <label className="has-text-weight-medium">Client First Name: </label>
+                                    <p>{(modalClientData.first_name ? modalClientData.first_name : "")}</p>
 
                                 </>
                             },
                             {modalClientData.last_name &&
                                 <>
-                                    <label className="has-text-weight-medium">Clientasfasf Name: </label>
-                                <p>{(modalClientData.last_name ? modalClientData.last_name : "")}</p>
+                                    <label className="has-text-weight-medium">Client Last Name Name: </label>
+                                    <p>{(modalClientData.last_name ? modalClientData.last_name : "")}</p>
+
+                                </>
+                            },
+                            {modalClientData.phone_number &&
+                                <>
+                                    <label className="has-text-weight-medium">Client Phone Number: </label>
+                                <p>{(modalClientData.phone_number ? modalClientData.phone_number : "")}</p>
 
                                 </>
                             }
 
 
                         </div>
-                        <div className="column">
+                        <div className="column" onSubmit={event => sendForm}>
                             {modalClientData.contact_id &&
                                 <>
-                                    <label className="has-text-weight-medium">State: </label>
-
+                                   <div className="field">
+                                        <label className="has-text-weight-medium">Updated First name: </label>
+                                        <input className="input" type="text" id="first_name" placeholder="Text Input"></input>
+                                   </div>
                                 </>
                             }
                             {modalClientData.contact_id &&
                                 <>
-                                    <label className="has-text-weight-medium">Number of Inventories: </label>
-                                <p className="mb-3">{(modalClientData.contact_id ? modalClientData.contact_id.toString() : "")}</p>
+                                <div className="field">
+                                    <label className="has-text-weight-medium">Updated Last name: </label>
+                                    <input className="input" type="text" id="last_name" placeholder="Text Input"></input>
+                                </div>
                                 </>
                             }
                             {modalClientData.contact_id &&
                                 <>
-                                    <label className="has-text-weight-medium">Number of Contacts: </label>
-                                <p>{(modalClientData.contact_id ? modalClientData.contact_id.toString() : "")}</p>
+                                <div className="field">
+                                    <label className="has-text-weight-medium">Updated Phone Number: </label>
+                                    <input className="input" type="text" id="phone_number" placeholder="Text Input"></input>
+                                </div>
                                 </>
                             }
+                            <button type="submit">Submit</button>
                         </div>
                     </section>
                 </div>
@@ -126,16 +169,17 @@ export default function Main() {
 
     return (
         <>
-            <h2 className="is-size-2 pb-6 has-text-weight-medium">Client Lidafasfasfasfst</h2>
+            <h2 className="is-size-2 pb-6 has-text-weight-medium">Client Contact List</h2>
             <div className="box columns is-centered is-radiusless">
                 <div className="column is-6 px-0 py-0">
                     <table className="table is-striped is-fullwidth">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Client Name Email Phone Number</th>
-                                <th></th>
-                                <th></th>
+                                <th>Client Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Edit Client</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -143,12 +187,15 @@ export default function Main() {
                             {tableData.map((row, i) =>
                                 <tr id={(row.contact_id ? row.contact_id.toString() : "")} >
                                     <td>{(row.contact_id ? row.contact_id.toString() : "")}</td>
-                                    <td>{(row.first_name ? row.first_name : "")} {(row.last_name ? row.last_name : "")}   |
-                                        {(row.email_address ? row.email_address : "")} | {(row.phone_number ? row.phone_number : "") }
+                                    <td>{(row.first_name ? row.first_name : "")} {(row.last_name ? row.last_name : "")}
 
                                     </td>
-                                    <td><button className="button is-dark" onClick={() => showModal(i)}>Edit Client Contact</button></td>
+                                    <td>{(row.email_address ? row.email_address : "")} </td>
+                                    <td>{(row.phone_number ? row.phone_number : "")}</td>
+                                    <td><button onClick={() => editClient(i)}>Click to Edit</button></td>
+                                    
                                 </tr>
+
                             )}
                         </tbody>
                     </table>
@@ -161,32 +208,37 @@ export default function Main() {
                     <table className="table is-striped is-fullwidth">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Client Name</th>
-                                <th>State</th>
-                                <th>Number of Invenftories</th>
-                                <th>Number of Contacts</th>
-                                <th></th>
+                               
+                                <th>Contact Info</th>
+                                <th>Contact Editor</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
                             {tableData.map((row, i) =>
                                 <tr id={(row.contact_id ? row.contact_id.toString() : "")}>
-                                    <td>{(row.contact_id ? row.contact_id.toString() : "")}</td>
-                                    <td>{(row.first_name ? row.first_name : "")} {(row.last_name ? row.last_name : "")}   |
-                                        {(row.email_address ? row.email_address : "")} | {(row.phone_number ? row.phone_number : "")}
+                                    
+                                    <td>
+                                    <tr>{(row.first_name ? row.first_name : "")}</tr>
+                                    <tr> {(row.last_name ? row.last_name : "")}</tr>
 
+                                    <tr>{(row.email_address ? row.email_address : "")}</tr>
+                                    <tr>{(row.phone_number ? row.phone_number : "")}</tr>
                                     </td>
-                                    <td><button className="button is-dark" onClick={() => showModal(i)}>View Client Details</button></td>
                                 </tr>
+
                             )}
                         </tbody>
+                        
                     </table>
+
                     <Modal
                         closeModal={toggleModal}
                         modalState={isModalActive.valueOf()}
                     />
-                </div>
+                
+                </div>                
+              
             </div>
         </>
     );
