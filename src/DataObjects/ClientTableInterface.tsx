@@ -1,38 +1,27 @@
 import axios from "axios";
 
 export interface ClientTableRow {
-    //company_address_id: JSX.Element;
-    abc_client_id: Number,
-    client_name: String,
-    company_address_id: Number,
-    phone_number: String,
-    created_by: String,
-    created_date: String,
-    modified_by: String,
-    modified_date: String,
-    is_deleted: Number,
-
+    id: Number,
+    ClientName: String,
+    AddressState: String,
+    InventoryCount: Number,
+    ContactCount: Number
 }
 
 
 export interface ClientTableJsonObject {
-    abc_client_id: Number,
+    id: Number,
     client_name: String,
-    company_address_id: Number,
-    phone_number: String,
-    created_by: String,
-    created_date: String,
-    modified_by: String,
-    modified_date: String,
-    is_deleted: Number,
+    state: String,
+    num_of_inventories: Number,
+    num_of_contacts: Number
 }
-
 
 
 export async function getClientTable() {
     const response = await axios.get(
-        'http://localhost:8000/abcclient',
-        {}
+      'http://localhost:8040/clients',
+      {}
     );
 
     return response;
