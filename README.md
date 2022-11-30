@@ -6,9 +6,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm install`
-Use this command to get the appropiate packages you will need.
-
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -32,6 +29,15 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Learn More
 
@@ -62,25 +68,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-# Helpful guide
-0. Install node.js and whatever IDE you want.
-1. Create a new project by opening a terminal and entering in: npx create-react-app <app-name>
-	a. Install create-react-app if not installed.
-2. After everything is created, change directories to your new project in your terminal and start the app: npm start
-3. Cancel the running server. 
-4. Add bulma to the project using: npm install bulma --save
-5. Add react-router using: npm install react-router-dom --save
-6. Add typescript to the application: npm install --save typescript @types/node @types/react @types/react-dom @types/jest
-7. Add a typescript.json file: npx tsc --init
-
-# Run your json-server
-1. Go to the DataConstants folder in a new terminal.
-2. Run the following: ```json-server --watch clientDb.json --port 8040```
- 
-Helpful Links:
-* https://bulma.io/
-* https://reactjs.org/tutorial/tutorial.html
-* https://reactrouter.com/en/main
-* https://create-react-app.dev/docs/adding-typescript/
-* https://github.com/typicode/json-server
