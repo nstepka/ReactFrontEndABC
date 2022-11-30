@@ -35,3 +35,12 @@
         "num_of_inventories": 100,
         "num_of_contacts": 25
     },
+    {
+        "id": 6,
+        "client_name": "EB Gamers",
+        "state": "UT",
+        "num_of_inventories": 26,
+        "num_of_contacts": 4
+    }
+  ]
+}
